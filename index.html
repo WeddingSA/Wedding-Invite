@@ -22,7 +22,6 @@
   <button class="portal-tab active" data-view="wedding">Wedding</button>
   <button class="portal-tab" data-view="admin">Admin</button>
 </nav>
-
 <header class="hero"><div class="shell"><div class="eyebrow">Together with their families</div><h1 class="names">Brian <span class="amp">&</span> Victoria</h1><p class="date">13 February 2027</p><p class="venue">Running Waters · Kragga Kamma Road · Port Elizabeth, South Africa</p><div class="actions"><a class="btn" href="#rsvp">RSVP</a><a class="btn secondary" href="#details">Wedding Details</a></div></div></header>
 <main>
 <section id="details"><div class="shell"><h2 class="section-title">Wedding Details</h2><div class="divider"></div><p class="subtitle">We would love for you to join us as we celebrate our wedding day.</p><div class="details"><article class="card"><div class="label">When</div><h3>13 February 2027</h3><p>Ceremony begins at 2:00 PM<br>Celebrations conclude at 1:00 AM</p></article><article class="card"><div class="label">Where</div><h3>Running Waters</h3><p>Kragga Kamma Road<br>Port Elizabeth, South Africa</p></article><article class="card"><div class="label">Dress Code</div><h3>Cocktail Attire</h3><p>Elegant, stylish and celebration-ready.</p></article></div><div class="note">Although your presence is our gift enough, should you wish to make a small contribution towards our honeymoon, you can let us know in the RSVP below.</div></div></section>
@@ -37,49 +36,7 @@
 </div></form></div></div></section>
 </main>
 <footer><div class="mini">Brian & Victoria</div><div>13 · 02 · 2027</div></footer>
-
-<section id="adminView" class="admin-view">
-  <div class="admin-shell">
-    <div class="admin-login" id="adminLoginBox">
-      <h2>Wedding Admin</h2>
-      <p class="admin-sub">Enter the admin password to view RSVP responses.</p>
-      <form id="adminLoginForm" class="admin-login-row">
-        <input id="adminPasswordInput" type="password" autocomplete="current-password" placeholder="Admin password" required>
-        <button class="btn" type="submit">Open dashboard</button>
-      </form>
-      <div id="adminLoginError" class="admin-error"></div>
-    </div>
-
-    <div class="admin-dashboard" id="adminDashboard">
-      <div class="admin-top">
-        <div><h2>Brian & Victoria</h2><p class="admin-sub">RSVP Admin · 13 February 2027</p></div>
-        <button class="btn admin-logout" id="adminLogout">Log out</button>
-      </div>
-      <div class="admin-stats">
-        <div class="admin-stat"><small>Responses</small><strong id="adminResponseCount">0</strong></div>
-        <div class="admin-stat"><small>Accepted</small><strong id="adminAcceptedCount">0</strong></div>
-        <div class="admin-stat"><small>Adults attending</small><strong id="adminAdultCount">0</strong></div>
-        <div class="admin-stat"><small>Children attending</small><strong id="adminChildCount">0</strong></div>
-      </div>
-      <div class="admin-panel">
-        <div class="admin-tabs">
-          <button class="admin-filter active" data-filter="all">All RSVPs</button>
-          <button class="admin-filter" data-filter="yes">Attending</button>
-          <button class="admin-filter" data-filter="no">Declined</button>
-        </div>
-        <div class="admin-toolbar"><div class="admin-toolbar-left"><input id="adminSearch" type="search" placeholder="Search guest name…"><button class="btn admin-export" id="adminExport" type="button">Export CSV</button></div><span id="adminShownCount"></span></div>
-        <div class="admin-table-wrap">
-          <table class="admin-table">
-            <thead><tr><th>Guest</th><th>RSVP</th><th>Adults</th><th>Children</th><th>Dietary / Notes</th><th>Honeymoon</th><th>Submitted</th></tr></thead>
-            <tbody id="adminRows"></tbody>
-          </table>
-          <div class="admin-empty" id="adminEmpty" style="display:none">No matching RSVPs.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<section id="adminView" class="admin-view"><div class="admin-shell"><div class="admin-login" id="adminLoginBox"><h2>Wedding Admin</h2><p class="admin-sub">Enter the admin password to view RSVP responses.</p><form id="adminLoginForm" class="admin-login-row"><input id="adminPasswordInput" type="password" autocomplete="current-password" placeholder="Admin password" required><button class="btn" type="submit">Open dashboard</button></form><div id="adminLoginError" class="admin-error"></div></div><div class="admin-dashboard" id="adminDashboard"><div class="admin-top"><div><h2>Brian & Victoria</h2><p class="admin-sub">RSVP Admin · 13 February 2027</p></div><button class="btn admin-logout" id="adminLogout">Log out</button></div><div class="admin-stats"><div class="admin-stat"><small>Responses</small><strong id="adminResponseCount">0</strong></div><div class="admin-stat"><small>Accepted</small><strong id="adminAcceptedCount">0</strong></div><div class="admin-stat"><small>Adults attending</small><strong id="adminAdultCount">0</strong></div><div class="admin-stat"><small>Children attending</small><strong id="adminChildCount">0</strong></div></div><div class="admin-panel"><div class="admin-tabs"><button class="admin-filter active" data-filter="all">All RSVPs</button><button class="admin-filter" data-filter="yes">Attending</button><button class="admin-filter" data-filter="no">Declined</button></div><div class="admin-toolbar"><div class="admin-toolbar-left"><input id="adminSearch" type="search" placeholder="Search guest name…"><button class="btn admin-export" id="adminExport" type="button">Export CSV</button></div><span id="adminShownCount"></span></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Guest</th><th>RSVP</th><th>Adults</th><th>Children</th><th>Dietary / Notes</th><th>Honeymoon</th><th>Submitted</th></tr></thead><tbody id="adminRows"></tbody></table><div class="admin-empty" id="adminEmpty" style="display:none">No matching RSVPs.</div></div></div></div></div></section>
 <script>
 const SUPABASE_URL='https://uogzkoxadudzrpobpdqj.supabase.co';
 const SUPABASE_KEY='sb_publishable_D088oEFVjq559e0ZP86TOw_AhfMg4v8';
@@ -87,11 +44,9 @@ const form=document.getElementById('rsvpForm'),status=document.getElementById('s
 honeymoon.addEventListener('change',()=>fundBox.style.display=honeymoon.checked?'block':'none');
 document.querySelectorAll('input[name="attending"]').forEach(r=>r.addEventListener('change',()=>{const attending=document.querySelector('input[name="attending"]:checked')?.value==='yes';adults.disabled=!attending;children.disabled=!attending;if(!attending){adults.value='1';children.value='0'}}));
 form.addEventListener('submit',async e=>{e.preventDefault();const choice=document.querySelector('input[name="attending"]:checked');if(!choice)return;const isAttending=choice.value==='yes';const payload={guest_name:document.getElementById('guestName').value.trim(),attending:isAttending,adults:isAttending?Number(adults.value):0,children:isAttending?Number(children.value):0,dietary_requirements:document.getElementById('dietary').value.trim()||null,honeymoon_contribution:honeymoon.checked};button.disabled=true;button.textContent='Submitting…';status.className='status';status.textContent='';try{const response=await fetch(`${SUPABASE_URL}/rest/v1/wedding_rsvps`,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Prefer':'return=minimal'},body:JSON.stringify(payload)});if(!response.ok)throw new Error(await response.text());status.className='status ok';status.textContent='Thank you — your RSVP has been received.';form.reset();fundBox.style.display='none';adults.disabled=false;children.disabled=false;status.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(err){console.error(err);status.className='status err';status.textContent='Sorry, we could not save your RSVP. Please try again.';}finally{button.disabled=false;button.textContent='Submit RSVP';}});
-
 const portalTabs=document.querySelectorAll('.portal-tab'),weddingHeader=document.querySelector('header'),weddingMain=document.querySelector('main'),weddingFooter=document.querySelector('footer'),adminView=document.getElementById('adminView');
 function setPortalView(view){portalTabs.forEach(t=>t.classList.toggle('active',t.dataset.view===view));const showAdmin=view==='admin';weddingHeader.style.display=showAdmin?'none':'';weddingMain.style.display=showAdmin?'none':'';weddingFooter.style.display=showAdmin?'none':'';adminView.style.display=showAdmin?'block':'none';window.scrollTo({top:0,behavior:'smooth'});}
 portalTabs.forEach(t=>t.addEventListener('click',()=>setPortalView(t.dataset.view)));
-
 let adminAllRows=[],adminActiveFilter='all',adminPassword='';
 const adminLoginBox=document.getElementById('adminLoginBox'),adminDashboard=document.getElementById('adminDashboard'),adminRows=document.getElementById('adminRows'),adminEmpty=document.getElementById('adminEmpty'),adminSearch=document.getElementById('adminSearch');
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
@@ -100,7 +55,7 @@ function adminRender(){const filtered=getAdminFilteredRows();adminRows.innerHTML
 function adminUpdateStats(){const yes=adminAllRows.filter(r=>r.attending);document.getElementById('adminResponseCount').textContent=adminAllRows.length;document.getElementById('adminAcceptedCount').textContent=yes.length;document.getElementById('adminAdultCount').textContent=yes.reduce((n,r)=>n+Number(r.adults||0),0);document.getElementById('adminChildCount').textContent=yes.reduce((n,r)=>n+Number(r.children||0),0);}
 async function adminLoad(){const res=await fetch('/api/rsvps',{headers:{'x-admin-password':adminPassword}});if(!res.ok){let message='Could not load RSVPs';try{const body=await res.json();if(res.status===401)message='Incorrect password';else if(body?.error)message=body.error;}catch{}throw new Error(message);}adminAllRows=await res.json();adminUpdateStats();adminRender();}
 function csvCell(value){const text=String(value??'').replace(/\r?\n/g,' ');return /[",\n]/.test(text)?`"${text.replace(/"/g,'""')}"`:text;}
-function exportAdminCsv(){const data=getAdminFilteredRows();if(!data.length){alert('There are no RSVPs to export in this view.');return;}const headers=['Guest','RSVP','Adults','Children','Dietary / Notes','Honeymoon Contribution','Submitted'];const lines=[headers.map(csvCell).join(',')];data.forEach(r=>lines.push([r.guest_name,r.attending?'Yes':'No',r.adults??0,r.children??0,r.dietary_requirements||'',r.honeymoon_contribution?'Yes':'No',r.created_at?new Date(r.created_at).toLocaleString():''].map(csvCell).join(',')));const blob=new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const link=document.createElement('a');const filterName=adminActiveFilter==='all'?'all-rsvps':adminActiveFilter==='yes'?'attending':'declined';link.href=url;link.download=`brian-victoria-${filterName}-${new Date().toISOString().slice(0,10)}.csv`;document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);}
+function exportAdminCsv(){const data=getAdminFilteredRows();if(!data.length){alert('There are no RSVPs to export in this view.');return;}const headers=['Guest','RSVP','Adults','Children','Dietary / Notes','Honeymoon Contribution','Submitted'];const lines=['sep=,',headers.map(csvCell).join(',')];data.forEach(r=>lines.push([r.guest_name,r.attending?'Yes':'No',r.adults??0,r.children??0,r.dietary_requirements||'',r.honeymoon_contribution?'Yes':'No',r.created_at?new Date(r.created_at).toLocaleString():''].map(csvCell).join(',')));const blob=new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const link=document.createElement('a');const filterName=adminActiveFilter==='all'?'all-rsvps':adminActiveFilter==='yes'?'attending':'declined';link.href=url;link.download=`brian-victoria-${filterName}-${new Date().toISOString().slice(0,10)}.csv`;document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);}
 document.getElementById('adminLoginForm').addEventListener('submit',async e=>{e.preventDefault();const err=document.getElementById('adminLoginError');err.textContent='';adminPassword=document.getElementById('adminPasswordInput').value;try{await adminLoad();adminLoginBox.style.display='none';adminDashboard.style.display='block';}catch(ex){err.textContent=ex.message;adminPassword='';}});
 document.querySelectorAll('.admin-filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.admin-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');adminActiveFilter=b.dataset.filter;adminRender();}));
 adminSearch.addEventListener('input',adminRender);
