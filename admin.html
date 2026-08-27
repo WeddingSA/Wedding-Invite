@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wedding Admin | Brian & Victoria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ivory:#f7f2e8;--paper:#fffdf8;--ink:#171717;--muted:#756d61;--gold:#b08a47;--line:rgba(176,138,71,.30);--ok:#315d36;--no:#8b3a2c}*{box-sizing:border-box}body{margin:0;background:var(--ivory);color:var(--ink);font-family:Montserrat,sans-serif}.shell{width:min(1180px,calc(100% - 30px));margin:0 auto;padding:36px 0 60px}h1{font:600 clamp(2.4rem,5vw,4rem)/1.05 "Cormorant Garamond",serif;margin:0 0 6px}.sub{color:var(--muted);margin:0 0 28px}.login,.panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 14px 45px rgba(42,32,18,.08)}.login{max-width:520px;margin:60px auto}.field{display:flex;gap:10px}.field input{flex:1;border:1px solid #d8d0c4;border-radius:12px;padding:12px 14px;font:inherit}.btn{border:0;border-radius:999px;padding:12px 18px;background:var(--gold);color:#fff;font-weight:600;cursor:pointer}.error{color:var(--no);margin-top:10px}.dashboard{display:none}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}.stat{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px}.stat small{text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}.stat strong{display:block;font:600 2rem "Cormorant Garamond",serif;margin-top:4px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.tab{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:10px 16px;font-weight:600;cursor:pointer}.tab.active{background:var(--gold);color:#fff;border-color:var(--gold)}.toolbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:16px}.toolbar input{width:min(360px,100%);border:1px solid #d8d0c4;border-radius:12px;padding:11px 13px;font:inherit}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#fff}table{width:100%;border-collapse:collapse;min-width:850px}th,td{text-align:left;padding:13px 14px;border-bottom:1px solid #eee7db;font-size:.9rem}th{background:#fbf7ef;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}.yes{color:var(--ok);font-weight:600}.no{color:var(--no);font-weight:600}.empty{text-align:center;color:var(--muted);padding:36px}.topline{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.logout{background:transparent;color:var(--ink);border:1px solid var(--line)}@media(max-width:760px){.stats{grid-template-columns:1fr 1fr}.field{flex-direction:column}.toolbar{align-items:stretch;flex-direction:column}.topline{align-items:center}.stat{padding:16px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <section class="login" id="loginBox">
+    <h1>Wedding Admin</h1>
+    <p class="sub">Enter the admin password to view RSVP responses.</p>
+    <form id="loginForm" class="field">
+      <input id="password" type="password" autocomplete="current-password" placeholder="Admin password" required>
+      <button class="btn" type="submit">Open dashboard</button>
+    </form>
+    <div id="loginError" class="error"></div>
+  </section>
+
+  <section class="dashboard" id="dashboard">
+    <div class="topline">
+      <div><h1>Brian & Victoria</h1><p class="sub">RSVP Admin · 13 February 2027</p></div>
+      <button class="btn logout" id="logout">Log out</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><small>Responses</small><strong id="responseCount">0</strong></div>
+      <div class="stat"><small>Accepted</small><strong id="acceptedCount">0</strong></div>
+      <div class="stat"><small>Adults attending</small><strong id="adultCount">0</strong></div>
+      <div class="stat"><small>Children attending</small><strong id="childCount">0</strong></div>
+    </div>
+
+    <div class="panel">
+      <div class="tabs">
+        <button class="tab active" data-filter="all">All RSVPs</button>
+        <button class="tab" data-filter="yes">Attending</button>
+        <button class="tab" data-filter="no">Declined</button>
+      </div>
+      <div class="toolbar"><input id="search" type="search" placeholder="Search guest name…"><span id="shownCount"></span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Guest</th><th>RSVP</th><th>Adults</th><th>Children</th><th>Dietary / Notes</th><th>Honeymoon</th><th>Submitted</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div class="empty" id="empty" style="display:none">No matching RSVPs.</div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+let allRows=[],activeFilter='all',adminPassword='';
+const loginBox=document.getElementById('loginBox'),dashboard=document.getElementById('dashboard'),rows=document.getElementById('rows'),empty=document.getElementById('empty'),search=document.getElementById('search');
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+function render(){const q=search.value.trim().toLowerCase();const filtered=allRows.filter(r=>(activeFilter==='all'||(activeFilter==='yes'&&r.attending)||(activeFilter==='no'&&!r.attending))&&(!q||String(r.guest_name||'').toLowerCase().includes(q)));rows.innerHTML=filtered.map(r=>`<tr><td><strong>${esc(r.guest_name)}</strong></td><td class="${r.attending?'yes':'no'}">${r.attending?'Yes':'No'}</td><td>${r.adults??0}</td><td>${r.children??0}</td><td>${esc(r.dietary_requirements||'—')}</td><td>${r.honeymoon_contribution?'Yes':'No'}</td><td>${r.created_at?new Date(r.created_at).toLocaleString():'—'}</td></tr>`).join('');empty.style.display=filtered.length?'none':'block';document.getElementById('shownCount').textContent=`${filtered.length} shown`}
+function updateStats(){const yes=allRows.filter(r=>r.attending);document.getElementById('responseCount').textContent=allRows.length;document.getElementById('acceptedCount').textContent=yes.length;document.getElementById('adultCount').textContent=yes.reduce((n,r)=>n+Number(r.adults||0),0);document.getElementById('childCount').textContent=yes.reduce((n,r)=>n+Number(r.children||0),0)}
+async function load(){const res=await fetch('/api/rsvps',{headers:{'x-admin-password':adminPassword}});if(!res.ok)throw new Error(res.status===401?'Incorrect password':'Could not load RSVPs');allRows=await res.json();updateStats();render()}
+document.getElementById('loginForm').addEventListener('submit',async e=>{e.preventDefault();const err=document.getElementById('loginError');err.textContent='';adminPassword=document.getElementById('password').value;try{await load();loginBox.style.display='none';dashboard.style.display='block'}catch(ex){err.textContent=ex.message;adminPassword=''}});
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeFilter=b.dataset.filter;render()}));search.addEventListener('input',render);document.getElementById('logout').addEventListener('click',()=>{adminPassword='';allRows=[];dashboard.style.display='none';loginBox.style.display='block';document.getElementById('password').value=''});
+</script>
+</body>
+</html>
