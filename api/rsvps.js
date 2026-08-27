@@ -11,11 +11,14 @@ export default async function handler(req, res) {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!expected || !serviceKey) {
-    return res.status(500).json({ error: 'Admin environment variables are not configured.' });
+    const missing = [];
+    if (!expected) missing.push('ADMIN_PASSWORD');
+    if (!serviceKey) missing.push('SUPABASE_SERVICE_ROLE_KEY');
+    return res.status(500).json({ error: `Missing Vercel environment variable${missing.length > 1 ? 's' : ''}: ${missing.join(', ')}` });
   }
 
   if (!supplied || supplied !== expected) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: 'Incorrect admin password' });
   }
 
   try {
@@ -30,7 +33,7 @@ export default async function handler(req, res) {
     if (!response.ok) {
       const details = await response.text();
       console.error('Supabase RSVP fetch failed:', response.status, details);
-      return res.status(502).json({ error: 'Could not load RSVPs.' });
+      return res.status(502).json({ error: 'Could not load RSVPs from Supabase.' });
     }
 
     const data = await response.json();
