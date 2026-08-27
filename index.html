@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f7f2e8" />
+  <title>Brian & Victoria | 13 February 2027</title>
+  <meta name="description" content="Wedding invitation for Brian and Victoria — 13 February 2027 at Running Waters, Port Elizabeth." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ivory: #f7f2e8;
+      --paper: #fffdf8;
+      --ink: #171717;
+      --muted: #756d61;
+      --gold: #b08a47;
+      --gold-soft: #d4bd8d;
+      --line: rgba(176,138,71,.34);
+      --shadow: 0 18px 60px rgba(42, 32, 18, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(212,189,141,.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(176,138,71,.13), transparent 26%),
+        var(--ivory);
+      font-family: "Montserrat", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    .shell { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 72px 0 54px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      opacity: .45;
+    }
+    .hero::before { top: -150px; left: -120px; }
+    .hero::after { bottom: -165px; right: -105px; }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .28em;
+      font-size: .72rem;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+    .names {
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(4.5rem, 12vw, 8.8rem);
+      line-height: .95;
+      font-weight: 400;
+      color: var(--gold);
+      margin: 0;
+      text-shadow: 0 1px 0 rgba(255,255,255,.75);
+    }
+    .amp { color: var(--ink); font-size: .72em; padding: 0 .08em; }
+    .date {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.55rem, 3vw, 2.15rem);
+      letter-spacing: .08em;
+      margin: 28px 0 8px;
+    }
+    .venue {
+      font-family: "Cormorant Garamond", serif;
+      color: var(--muted);
+      font-size: 1.18rem;
+      margin: 0;
+    }
+    .hero-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:34px; }
+    .btn {
+      appearance:none;
+      border:1px solid var(--gold);
+      border-radius:999px;
+      padding:13px 22px;
+      font:600 .78rem/1 "Montserrat", sans-serif;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+      text-decoration:none;
+      cursor:pointer;
+      transition:.2s ease;
+      background:var(--gold);
+      color:#fff;
+    }
+    .btn.secondary { background:transparent; color:var(--ink); }
+    .btn:hover { transform: translateY(-1px); box-shadow:0 8px 20px rgba(176,138,71,.18); }
+    section { padding: 76px 0; }
+    .section-title {
+      font-family:"Cormorant Garamond", serif;
+      font-size:clamp(2.3rem, 5vw, 3.7rem);
+      font-weight:500;
+      text-align:center;
+      margin:0 0 10px;
+    }
+    .section-subtitle { max-width:680px; margin:0 auto 38px; text-align:center; color:var(--muted); }
+    .divider { width:72px; height:1px; background:var(--gold); margin:20px auto 34px; }
+    .details-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .card {
+      background:rgba(255,253,248,.86);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:30px 24px;
+      text-align:center;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(7px);
+    }
+    .card .label { text-transform:uppercase; letter-spacing:.16em; font-size:.7rem; color:var(--gold); font-weight:600; }
+    .card h3 { font-family:"Cormorant Garamond", serif; font-size:1.7rem; font-weight:600; margin:9px 0 6px; }
+    .card p { color:var(--muted); margin:0; }
+    .note {
+      max-width:760px;
+      margin:32px auto 0;
+      padding:22px 24px;
+      border-left:2px solid var(--gold);
+      background:rgba(255,255,255,.48);
+      color:var(--muted);
+      font-family:"Cormorant Garamond", serif;
+      font-size:1.28rem;
+    }
+    .rsvp-wrap {
+      max-width:760px;
+      margin:0 auto;
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      padding:clamp(24px, 5vw, 46px);
+    }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .field { display:flex; flex-direction:column; gap:8px; }
+    .field.full { grid-column:1/-1; }
+    label { font-size:.78rem; font-weight:600; letter-spacing:.05em; }
+    input, select, textarea {
+      width:100%;
+      border:1px solid #d8d0c4;
+      border-radius:12px;
+      background:#fff;
+      color:var(--ink);
+      padding:13px 14px;
+      font:inherit;
+      outline:none;
+    }
+    input:focus, select:focus, textarea:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(176,138,71,.10); }
+    textarea { min-height:100px; resize:vertical; }
+    .choice-row { display:flex; gap:14px; flex-wrap:wrap; }
+    .choice {
+      display:flex; align-items:center; gap:8px;
+      border:1px solid #d8d0c4; border-radius:12px; padding:11px 13px;
+      background:#fff; cursor:pointer;
+    }
+    .choice input { width:auto; }
+    .fund-box {
+      display:none;
+      margin-top:12px;
+      padding:18px;
+      border:1px dashed var(--gold-soft);
+      border-radius:14px;
+      background:#fbf7ef;
+      color:var(--muted);
+    }
+    .fund-box strong { color:var(--ink); }
+    .status {
+      margin-top:18px;
+      border-radius:12px;
+      padding:13px 15px;
+      background:#f5efe4;
+      color:#6a5a42;
+      display:none;
+    }
+    footer { text-align:center; padding:48px 16px 64px; color:var(--muted); }
+    footer .mini-names { font-family:"Great Vibes", cursive; color:var(--gold); font-size:2.8rem; }
+    @media (max-width: 760px) {
+      .details-grid, .form-grid { grid-template-columns:1fr; }
+      .field.full { grid-column:auto; }
+      .hero { min-height:86vh; }
+      section { padding:58px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="shell">
+      <div class="eyebrow">Together with their families</div>
+      <h1 class="names">Brian <span class="amp">&</span> Victoria</h1>
+      <p class="date">13 February 2027</p>
+      <p class="venue">Running Waters · Kragga Kamma Road · Port Elizabeth, South Africa</p>
+      <div class="hero-actions">
+        <a class="btn" href="#rsvp">RSVP</a>
+        <a class="btn secondary" href="#details">Wedding Details</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="details">
+      <div class="shell">
+        <h2 class="section-title">Wedding Details</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">We would love for you to join us as we celebrate our wedding day.</p>
+        <div class="details-grid">
+          <article class="card">
+            <div class="label">When</div>
+            <h3>13 February 2027</h3>
+            <p>Ceremony begins at 2:00 PM<br>Celebrations conclude at 1:00 AM</p>
+          </article>
+          <article class="card">
+            <div class="label">Where</div>
+            <h3>Running Waters</h3>
+            <p>Kragga Kamma Road<br>Port Elizabeth, South Africa</p>
+          </article>
+          <article class="card">
+            <div class="label">Dress Code</div>
+            <h3>Cocktail Attire</h3>
+            <p>Elegant, stylish and celebration-ready.</p>
+          </article>
+        </div>
+        <div class="note">Although your presence is our gift enough, should you wish to make a small contribution towards our honeymoon, you can let us know in the RSVP below.</div>
+      </div>
+    </section>
+
+    <section id="rsvp">
+      <div class="shell">
+        <h2 class="section-title">Kindly RSVP</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Please tell us who will be joining you so we can plan your place at the celebration.</p>
+
+        <div class="rsvp-wrap">
+          <form id="rsvpForm">
+            <div class="form-grid">
+              <div class="field full">
+                <label for="guestName">Guest name</label>
+                <input id="guestName" name="guestName" type="text" required placeholder="Your full name" />
+              </div>
+
+              <div class="field full">
+                <label>Will you be attending?</label>
+                <div class="choice-row">
+                  <label class="choice"><input type="radio" name="attending" value="Yes" required> Joyfully accepts</label>
+                  <label class="choice"><input type="radio" name="attending" value="No" required> Regretfully declines</label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="adults">Adults attending</label>
+                <select id="adults" name="adults">
+                  <option value="1">1 adult</option>
+                  <option value="2">2 adults</option>
+                  <option value="3">3 adults</option>
+                  <option value="4">4 adults</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="children">Children attending</label>
+                <select id="children" name="children">
+                  <option value="0">No children</option>
+                  <option value="1">1 child</option>
+                  <option value="2">2 children</option>
+                  <option value="3">3 children</option>
+                  <option value="4">4 children</option>
+                  <option value="5">5 children</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label for="dietary">Dietary requirements or notes</label>
+                <textarea id="dietary" name="dietary" placeholder="Please let us know about any dietary requirements or anything we should be aware of."></textarea>
+              </div>
+
+              <div class="field full">
+                <label class="choice"><input id="honeymoon" type="checkbox" name="honeymoon" value="Yes"> Yes, I would like to contribute towards the honeymoon fund</label>
+                <div class="fund-box" id="fundBox">
+                  <strong>Honeymoon fund</strong><br>
+                  Bank account details can be added here once confirmed.
+                </div>
+              </div>
+
+              <div class="field full">
+                <button class="btn" type="submit">Submit RSVP</button>
+                <div class="status" id="status">The RSVP page is ready. Submission storage will be activated when the site is connected to its RSVP backend.</div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="mini-names">Brian & Victoria</div>
+    <div>13 · 02 · 2027</div>
+  </footer>
+
+  <script>
+    const honeymoon = document.getElementById('honeymoon');
+    const fundBox = document.getElementById('fundBox');
+    honeymoon.addEventListener('change', () => {
+      fundBox.style.display = honeymoon.checked ? 'block' : 'none';
+    });
+
+    const form = document.getElementById('rsvpForm');
+    const status = document.getElementById('status');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      status.style.display = 'block';
+      status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>
