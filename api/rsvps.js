@@ -22,18 +22,30 @@ export default async function handler(req, res) {
   }
 
   try {
+    const headers = {
+      apikey: serviceKey,
+      Accept: 'application/json'
+    };
+
+    // Legacy service-role keys are JWTs and can be used as Bearer tokens.
+    // New Supabase sb_secret_* keys are not JWTs, so sending them in the
+    // Authorization header causes an invalid-JWT response. The apikey header
+    // is sufficient for those keys.
+    if (serviceKey.startsWith('eyJ')) {
+      headers.Authorization = `Bearer ${serviceKey}`;
+    }
+
     const response = await fetch(`${SUPABASE_URL}/rest/v1/wedding_rsvps?select=guest_name,attending,adults,children,dietary_requirements,honeymoon_contribution,created_at&order=created_at.desc`, {
-      headers: {
-        apikey: serviceKey,
-        Authorization: `Bearer ${serviceKey}`,
-        Accept: 'application/json'
-      }
+      headers
     });
 
     if (!response.ok) {
       const details = await response.text();
       console.error('Supabase RSVP fetch failed:', response.status, details);
-      return res.status(502).json({ error: 'Could not load RSVPs from Supabase.' });
+      let hint = 'Could not load RSVPs from Supabase.';
+      if (response.status === 401 || response.status === 403) hint = 'Supabase rejected the service key. Check that the Vercel key belongs to this wedding Supabase project.';
+      if (response.status === 404) hint = 'The wedding_rsvps table could not be found in the configured Supabase project.';
+      return res.status(502).json({ error: hint });
     }
 
     const data = await response.json();
