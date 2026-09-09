@@ -1,0 +1,42 @@
+name: Adjust top-left floral blend
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/adjust-top-left-blend.yml'
+permissions:
+  contents: write
+jobs:
+  adjust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Adjust top-left floral only
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          html = p.read_text()
+          old = '.floral-corner{position:absolute;z-index:2;pointer-events:none;opacity:.98;height:auto;background:transparent}.floral-corner.top-left{left:-8px;top:-8px;width:330px}.floral-corner.bottom-right{right:-8px;bottom:-8px;width:180px;transform:rotate(180deg)}'
+          new = '.floral-corner{position:absolute;z-index:2;pointer-events:none;opacity:.98;height:auto;background:transparent}.floral-corner.top-left{left:0;top:0;width:255px}.floral-corner.bottom-right{right:-8px;bottom:-8px;width:180px;transform:rotate(180deg)}.invitation::before{content:"";position:absolute;top:0;left:0;width:290px;height:290px;pointer-events:none;z-index:1;background:radial-gradient(circle at top left,rgba(255,253,247,1) 0%,rgba(250,247,239,.96) 48%,rgba(248,244,233,.70) 72%,rgba(248,244,233,0) 100%)}'
+          if old not in html:
+              raise SystemExit('Expected floral CSS not found')
+          html = html.replace(old, new, 1)
+          mobile_old = '.floral-corner.top-left{width:215px}.floral-corner.bottom-right{width:120px}'
+          mobile_new = '.floral-corner.top-left{left:0;top:0;width:165px}.floral-corner.bottom-right{width:120px}.invitation::before{width:220px;height:220px}'
+          if mobile_old not in html:
+              raise SystemExit('Expected mobile floral CSS not found')
+          html = html.replace(mobile_old, mobile_new, 1)
+          p.write_text(html)
+          PY
+      - name: Commit adjustment
+        run: |
+          git config user.name "WeddingSA Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          git rm .github/workflows/adjust-top-left-blend.yml
+          git commit -m "Refine top-left floral size and blend"
+          git push origin main
