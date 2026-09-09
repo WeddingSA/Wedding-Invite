@@ -48,7 +48,19 @@ export default async function handler(req, res) {
       return res.status(502).json({ error: hint });
     }
 
-    const data = await response.json();
+    const rows = await response.json();
+    const dinnerMarker = /(?:^|\n)\[FRIDAY_DINNER:(yes|no)\](?=\n|$)/;
+    const data = rows.map(row => {
+      const notes = row.dietary_requirements || '';
+      const match = notes.match(dinnerMarker);
+      const cleanedNotes = notes.replace(dinnerMarker, '').trim();
+      return {
+        ...row,
+        friday_dinner_attending: match ? match[1] === 'yes' : null,
+        dietary_requirements: cleanedNotes || null
+      };
+    });
+
     res.setHeader('Cache-Control', 'no-store');
     return res.status(200).json(data);
   } catch (error) {
