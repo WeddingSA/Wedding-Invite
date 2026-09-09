@@ -1,0 +1,29 @@
+name: Cache-bust top-left floral
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/cache-bust-top-floral.mjs'
+      - '.github/workflows/cache-bust-top-floral.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Apply top-left floral cache fix
+        run: node scripts/cache-bust-top-floral.mjs
+      - name: Commit fix
+        run: |
+          git config user.name "WeddingSA Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          git rm scripts/cache-bust-top-floral.mjs .github/workflows/cache-bust-top-floral.yml
+          git commit -m "Show top-left floral with fresh asset path"
+          git push origin main
