@@ -6,3 +6,4 @@ const next='.floral-corner.top-left{left:-6px;top:-4px;width:92px}';
 if(!html.includes(old)) throw new Error('Expected mobile top-left floral rule not found');
 html=html.replace(old,next);
 fs.writeFileSync(path,html);
+// trigger workflow
