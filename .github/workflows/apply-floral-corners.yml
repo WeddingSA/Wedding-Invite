@@ -1,0 +1,25 @@
+name: Apply floral corner update
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-floral-corners.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Apply floral corner changes
+        run: node scripts/apply-floral-corners.mjs
+      - name: Commit changes and clean up updater
+        run: |
+          git config user.name "WeddingSA Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git rm scripts/apply-floral-corners.mjs .github/workflows/apply-floral-corners.yml
+          git add index.html
+          git commit -m "Refine first-page floral corners"
+          git push
