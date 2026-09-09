@@ -35,7 +35,7 @@ export default async function handler(req, res) {
       headers.Authorization = `Bearer ${serviceKey}`;
     }
 
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/wedding_rsvps?select=guest_name,attending,adults,children,dietary_requirements,honeymoon_contribution,created_at&order=created_at.desc`, {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/wedding_rsvps?select=guest_name,attending,friday_dinner_attending,adults,children,dietary_requirements,honeymoon_contribution,created_at&order=created_at.desc`, {
       headers
     });
 
@@ -48,19 +48,7 @@ export default async function handler(req, res) {
       return res.status(502).json({ error: hint });
     }
 
-    const rows = await response.json();
-    const dinnerMarker = /(?:^|\n)\[FRIDAY_DINNER:(yes|no)\](?=\n|$)/;
-    const data = rows.map(row => {
-      const notes = row.dietary_requirements || '';
-      const match = notes.match(dinnerMarker);
-      const cleanedNotes = notes.replace(dinnerMarker, '').trim();
-      return {
-        ...row,
-        friday_dinner_attending: match ? match[1] === 'yes' : null,
-        dietary_requirements: cleanedNotes || null
-      };
-    });
-
+    const data = await response.json();
     res.setHeader('Cache-Control', 'no-store');
     return res.status(200).json(data);
   } catch (error) {
