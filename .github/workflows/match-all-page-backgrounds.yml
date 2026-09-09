@@ -1,0 +1,28 @@
+name: Match all page backgrounds
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/match-all-page-backgrounds.mjs
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Apply matching background colour
+        run: node scripts/match-all-page-backgrounds.mjs
+      - name: Commit update
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "WeddingSA Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          git commit -m "Match all portal page backgrounds"
+          git push origin main
