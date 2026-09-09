@@ -7,3 +7,4 @@ html=html.replace(/\.invitation::before\{content:"";position:absolute;top:0;left
 html=html.replace('.invitation::before{width:220px;height:220px}','');
 if(html===original) throw new Error('Expected invitation background styles not found');
 fs.writeFileSync(path,html);
+// trigger one-time workflow
